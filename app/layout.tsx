@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ConvexClientProviderWithClerk } from "@/components/ConvexClientProviderWithClerk";
+import { ConvexClientProviderWithClerk } from "@/components/providers/ConvexClientProviderWithClerk";
+import Header from "@/components/shared/Header";
 
 export const metadata: Metadata = {
   title: "YT Ticket App",
@@ -14,8 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen flex flex-col w-full">
         <ConvexClientProviderWithClerk>
+          <Header />
           {children}
         </ConvexClientProviderWithClerk>
       </body>
