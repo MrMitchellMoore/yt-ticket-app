@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import { ConvexClientProvider } from "@/components/ConvexClientProvider";
+import { ConvexClientProviderWithClerk } from "@/components/ConvexClientProviderWithClerk";
 
 export const metadata: Metadata = {
   title: "YT Ticket App",
@@ -16,9 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ConvexClientProvider>
-          <ClerkProvider>{children}</ClerkProvider>
-        </ConvexClientProvider>
+        <ConvexClientProviderWithClerk>
+          {children}
+        </ConvexClientProviderWithClerk>
       </body>
     </html>
   );
