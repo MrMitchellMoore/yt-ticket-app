@@ -1,7 +1,5 @@
+import EventList from "@/components/events/EventList";
+
 export default function Home() {
-  return (
-    <div>
-      <h1>Welcome to the YT Ticket App</h1>
-    </div>
-  );
+  return <div className="">{<EventList />}</div>;
 }

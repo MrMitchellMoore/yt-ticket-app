@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ConvexClientProviderWithClerk } from "@/components/providers/ConvexClientProviderWithClerk";
 import Header from "@/components/shared/Header";
-import SyncUserWithConvex from "@/components/SyncUserWithConvex";
+import SyncUserWithConvex from "@/components/shared/SyncUserWithConvex";
 
 export const metadata: Metadata = {
   title: "YT Ticket App",
