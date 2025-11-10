@@ -1,6 +1,7 @@
 "use client";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useStorageUrl } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
@@ -16,6 +17,13 @@ function EventCard({ eventId }: { eventId: Id<"events"> }) {
     eventId,
     userId: user?.id || "",
   });
+
+  const queuePosition = useQuery(api.waitingList.getQueuePosition, {
+    eventId,
+    userId: user?.id || "",
+  });
+
+  const imageUrl = useStorageUrl(event?.imageStorageId);
 
   return (
     <div>
