@@ -3,6 +3,7 @@ import "./globals.css";
 import { ConvexClientProviderWithClerk } from "@/components/providers/ConvexClientProviderWithClerk";
 import Header from "@/components/shared/Header";
 import SyncUserWithConvex from "@/components/shared/SyncUserWithConvex";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "YT Ticket App",
@@ -20,7 +21,8 @@ export default function RootLayout({
         <ConvexClientProviderWithClerk>
           <Header />
           <SyncUserWithConvex />
-          {children}
+          <main>{children}</main>
+          <Toaster />
         </ConvexClientProviderWithClerk>
       </body>
     </html>
