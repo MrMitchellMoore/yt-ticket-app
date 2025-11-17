@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
 import { WAITING_LIST_STATUS } from "./constants";
 
 export const getQueuePosition = query({
@@ -40,6 +40,28 @@ export const getQueuePosition = query({
       ...entry,
       position: peopleAhead + 1, // +1 to include the user themselves
     };
+  },
+});
+
+/**
+  Internal mutation to expire a single offer and process queue for next person.
+  Called by scheduled job when offer timer expires.
+*/
+export const expireOffer = internalMutation({
+  args: {
+    waitingListId: v.id("waitingList"),
+    eventId: v.id("events"),
+  },
+  handler: async (ctx, { waitingListId, eventId }) => {
+    const offer = await ctx.db.get(waitingListId);
+    // if offer is not found or is not in offered status, do nothing
+    if (!offer || offer.status !== WAITING_LIST_STATUS.OFFERED) return;
+
+    await ctx.db.patch(waitingListId, {
+      status: WAITING_LIST_STATUS.EXPIRED,
+    });
+
+    await processQueue(ctx, { eventId });
   },
 });
 

@@ -161,14 +161,30 @@ export const joinWaitingList = mutation({
         offerExpiresAt: now + DURATIONS.TICKET_OFFER, // set expiration time
       });
 
-      // TODO: Need to implement internal.waitingList.expireOffer
-
       // Schedule a job to expire this offer after the offer duration
       await ctx.scheduler.runAfter(
         DURATIONS.TICKET_OFFER,
         internal.waitingList.expireOffer,
         { waitingListId, eventId }
       );
+    } else {
+      // If not tickets available, create a waiting entry
+      await ctx.db.insert("waitingList", {
+        eventId,
+        userId,
+        status: WAITING_LIST_STATUS.WAITING,
+      });
     }
+
+    // Return appropriate status message
+    return {
+      success: true,
+      status: available
+        ? WAITING_LIST_STATUS.OFFERED
+        : WAITING_LIST_STATUS.WAITING,
+      message: available
+        ? `Ticket offered - you have ${DURATIONS.TICKET_OFFER / (60 * 1000)} minutes to purchase.`
+        : "Added to waiting list - You will be notified if a ticket becomes available.",
+    };
   },
 });
