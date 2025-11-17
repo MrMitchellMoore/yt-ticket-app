@@ -65,10 +65,10 @@ function EventPage() {
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
                     <CalendarDays className="h-5 w-5 mr-2 text-blue-600" />
                     <span className="text-sm font-medium">Date</span>
+                    <p className="text-gray-900">
+                      {new Date(event.eventDate).toLocaleDateString()}
+                    </p>
                   </div>
-                  <p className="text-gray-900">
-                    {new Date(event.eventDate).toLocaleDateString()}
-                  </p>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
                   <div className="flex items-center text-gray-600 mb-1">
@@ -109,12 +109,12 @@ function EventPage() {
             </div>
             {/* Right Column - Ticket Purchase Card */}
             <div>
-              <div className="sticky top-8 space-y-4">
+              <div className="sticky top-8 space-y-4 mt-8">
                 <EventCard eventId={params.id as Id<"events">} />
                 {user ? (
                   <JoinQueue
                     eventId={params.id as Id<"events">}
-                    userId={user.id as Id<"users">}
+                    userId={user.id}
                   />
                 ) : (
                   <SignInButton>

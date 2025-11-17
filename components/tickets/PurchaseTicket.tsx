@@ -1,17 +1,15 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { WAITING_LIST_STATUS } from "@/convex/constants";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
 import { Ticket } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ReleaseTicket from "./ReleaseTicket";
 
 function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
-  const router = useRouter();
   const { user } = useUser();
 
   const queuePosition = useQuery(api.waitingList.getQueuePosition, {
@@ -21,7 +19,7 @@ function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
 
   const [timeRemaining, setTimeRemaining] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [now] = useState(() => Date.now());
+  const now = Date.now();
 
   const offerExpiresAt = queuePosition?.offerExpiresAt ?? 0;
   const isExpired = now > offerExpiresAt;
@@ -54,9 +52,20 @@ function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
   }, [offerExpiresAt, isExpired, now]);
 
   // create stripe checkout
-  const handlePurchase = async () => {};
+  const handlePurchase = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: Implement Stripe checkout session creation + redirect.
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  if (!user || !queuePosition || queuePosition.status !== "offered") {
+  if (
+    !user ||
+    !queuePosition ||
+    queuePosition.status !== WAITING_LIST_STATUS.OFFERED
+  ) {
     return null;
   }
 

@@ -22,7 +22,7 @@ export default function RootLayout({
           <Header />
           <SyncUserWithConvex />
           <main>{children}</main>
-          <Toaster />
+          <Toaster richColors />
         </ConvexClientProviderWithClerk>
       </body>
     </html>
