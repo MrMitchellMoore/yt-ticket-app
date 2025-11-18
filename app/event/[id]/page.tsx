@@ -61,15 +61,15 @@ function EventPage() {
                   <p className="text-gray-600 text-lg">{event.description}</p>
                 </div>
                 {/* Left Column - continued */}
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                    <CalendarDays className="h-5 w-5 mr-2 text-blue-600" />
-                    <span className="text-sm font-medium">Date</span>
-                    <p className="text-gray-900">
-                      {new Date(event.eventDate).toLocaleDateString()}
-                    </p>
-                  </div>
+
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                  <CalendarDays className="h-5 w-5 mr-2 text-blue-600" />
+                  <span className="text-sm font-medium">Date</span>
+                  <p className="text-gray-900">
+                    {new Date(event.eventDate).toLocaleDateString()}
+                  </p>
                 </div>
+
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
                   <div className="flex items-center text-gray-600 mb-1">
                     <MapPin className="h-5 w-5 mr-2 text-blue-600" />
@@ -95,34 +95,34 @@ function EventPage() {
                   </p>
                 </div>
               </div>
-              {/* Additional Event Information */}
-              <div className="bg-blue-50 border border-blue-100 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-blue-900 mb-2">
-                  Event Information
-                </h3>
-                <ul className="space-y-2 text-blue-700">
-                  <li>* Please arrive 30 minutes before the event starts</li>
-                  <li>* Tickets are non-refundable</li>
-                  <li>* Age restriction: 18+</li>
-                </ul>
-              </div>
-            </div>
-            {/* Right Column - Ticket Purchase Card */}
-            <div>
-              <div className="sticky top-8 space-y-4 mt-8">
-                <EventCard eventId={params.id as Id<"events">} />
-                {user ? (
-                  <JoinQueue
-                    eventId={params.id as Id<"events">}
-                    userId={user.id}
-                  />
-                ) : (
-                  <SignInButton>
-                    <Button className="w-full bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
-                      Sign in to buy tickets
-                    </Button>
-                  </SignInButton>
-                )}
+              <div>
+                {/* Additional Event Information */}
+                <div className="bg-blue-50 border border-blue-100 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                    Event Information
+                  </h3>
+                  <ul className="space-y-2 text-blue-700">
+                    <li>* Please arrive 30 minutes before the event starts</li>
+                    <li>* Tickets are non-refundable</li>
+                    <li>* Age restriction: 18+</li>
+                  </ul>
+                </div>
+                {/* Right Column - Ticket Purchase Card */}
+                <div className="sticky top-8 space-y-4 mt-8">
+                  <EventCard eventId={params.id as Id<"events">} />
+                  {user ? (
+                    <JoinQueue
+                      eventId={params.id as Id<"events">}
+                      userId={user.id}
+                    />
+                  ) : (
+                    <SignInButton>
+                      <Button className="w-full bg-linear-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-medium py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                        Sign in to buy tickets
+                      </Button>
+                    </SignInButton>
+                  )}
+                </div>
               </div>
             </div>
           </div>
